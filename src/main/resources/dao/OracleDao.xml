@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.perf.test.dao.OracleDao">
+
+    <delete id="deleteLocations">
+		DELETE
+		FROM LOCATIONS_TEST
+	</delete>
+
+    <insert id="insertLocationWithJdbcTypeSpecs">
+		INSERT INTO LOCATIONS_TEST (
+			COMPANY1_ID
+			,COMPANY2_ID
+			,COMPANY3_ID
+			,COMPANY4_ID
+			,COMPANY5_ID
+			,NAME
+			,ADDRESS
+			,LOCATION
+			,CITY
+			,STATE
+			,ZIPCODE
+			,LATITUDE
+			,LONGITUDE
+			,FUEL_PRICE
+			,FUEL_PRICE_DATE
+			,LOCATION_TYPE
+			)
+		VALUES (
+			#{company1Id, jdbcType=INTEGER}
+			,#{company2Id, jdbcType=INTEGER}
+			,#{company3Id, jdbcType=INTEGER}
+			,#{company4Id, jdbcType=VARCHAR}
+			,#{company5Id, jdbcType=INTEGER}
+			,#{name, jdbcType=VARCHAR}
+			,#{address, jdbcType=VARCHAR}
+			,#{location, jdbcType=VARCHAR}
+			,#{city, jdbcType=VARCHAR}
+			,#{state, jdbcType=VARCHAR}
+			,#{zipcode, jdbcType=VARCHAR}
+			,#{latitude, jdbcType=DECIMAL}
+			,#{longitude, jdbcType=DECIMAL}
+			,#{fuelPrice, jdbcType=DOUBLE}
+			,#{fuelPriceDate, jdbcType=TIMESTAMP}
+			,#{locationType, jdbcType=VARCHAR}
+			)
+    </insert>
+
+	<insert id="insertLocationWithoutJdbcTypeSpecs">
+		INSERT INTO LOCATIONS_TEST (
+			COMPANY1_ID
+			,COMPANY2_ID
+			,COMPANY3_ID
+			,COMPANY4_ID
+			,COMPANY5_ID
+			,NAME
+			,ADDRESS
+			,LOCATION
+			,CITY
+			,STATE
+			,ZIPCODE
+			,LATITUDE
+			,LONGITUDE
+			,FUEL_PRICE
+			,FUEL_PRICE_DATE
+			,LOCATION_TYPE
+			)
+		VALUES (
+			#{company1Id}
+			,#{company2Id}
+			,#{company3Id}
+			,#{company4Id}
+			,#{company5Id}
+			,#{name}
+			,#{address}
+			,#{location}
+			,#{city}
+			,#{state}
+			,#{zipcode}
+			,#{latitude}
+			,#{longitude}
+			,#{fuelPrice}
+			,#{fuelPriceDate}
+			,#{locationType}
+			)
+    </insert>
+
+</mapper>
