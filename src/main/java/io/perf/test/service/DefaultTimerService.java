@@ -78,6 +78,10 @@ public class DefaultTimerService implements TimerService {
 	/**
 	 * Tests:
 	 * 1. 254.930s - 10,000 rows
+	 * 
+	 * Due to the amount of time this takes to perform these tests, more test numbers aren't recorded here. 
+	 * More tests have been done in the past, and have shown the same approximate timings.
+	 * These timings are far greater than the above tests when the jdbcType is set in the xml.
 	 */
 	@Override
 	public void testSpringTransactionWithoutJdbcTypeSpecs() {
@@ -95,6 +99,10 @@ public class DefaultTimerService implements TimerService {
 	/**
 	 * Tests:
 	 * 1. 263.360s - 10,000 rows
+	 * 
+	 * Due to the amount of time this takes to perform these tests, more test numbers aren't recorded here. 
+	 * More tests have been done in the past, and have shown the same approximate timings.
+	 * These timings are far greater than the above tests when the jdbcType is set in the xml.
 	 */
 	@Override
 	public void testMyBatisBatchWithoutJdbcTypeSpecs() {
