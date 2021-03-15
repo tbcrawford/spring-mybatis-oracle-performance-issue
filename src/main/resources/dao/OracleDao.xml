@@ -7,6 +7,12 @@
 		FROM LOCATIONS_TEST
 	</delete>
 
+	<delete id="deleteLocationsWithStringIds">
+		DELETE
+		FROM LOCATIONS_TEST_STRS
+	</delete>
+
+
     <insert id="insertLocationWithJdbcTypeSpecs">
 		INSERT INTO LOCATIONS_TEST (
 			COMPANY1_ID
@@ -48,6 +54,45 @@
 
 	<insert id="insertLocationWithoutJdbcTypeSpecs">
 		INSERT INTO LOCATIONS_TEST (
+			COMPANY1_ID
+			,COMPANY2_ID
+			,COMPANY3_ID
+			,COMPANY4_ID
+			,COMPANY5_ID
+			,NAME
+			,ADDRESS
+			,LOCATION
+			,CITY
+			,STATE
+			,ZIPCODE
+			,LATITUDE
+			,LONGITUDE
+			,FUEL_PRICE
+			,FUEL_PRICE_DATE
+			,LOCATION_TYPE
+			)
+		VALUES (
+			#{company1Id}
+			,#{company2Id}
+			,#{company3Id}
+			,#{company4Id}
+			,#{company5Id}
+			,#{name}
+			,#{address}
+			,#{location}
+			,#{city}
+			,#{state}
+			,#{zipcode}
+			,#{latitude}
+			,#{longitude}
+			,#{fuelPrice}
+			,#{fuelPriceDate}
+			,#{locationType}
+			)
+    </insert>
+
+	<insert id="insertLocationWithVarcharIds">
+		INSERT INTO LOCATIONS_TEST_STRS (
 			COMPANY1_ID
 			,COMPANY2_ID
 			,COMPANY3_ID

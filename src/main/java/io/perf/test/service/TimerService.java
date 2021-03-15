@@ -12,4 +12,6 @@ public interface TimerService {
 
 	void testMyBatisBatchWithoutJdbcTypeSpecs();
 
+	void testMyBatisBatchWithStringIds();
+
 }

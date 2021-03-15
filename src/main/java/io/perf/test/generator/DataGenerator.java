@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
 
 import io.perf.test.model.Location;
+import io.perf.test.model.LocationWithStringIds;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,12 @@ public class DataGenerator {
 				.collect(Collectors.toList());
 	}
 
+	public List<LocationWithStringIds> getLargeLocationWithStringIdsList() {
+		return IntStream.range(0, LARGE_LIST_SIZE)
+				.mapToObj(this::getLocationWithStringIds)
+				.collect(Collectors.toList());
+	}
+
 	public List<Location> getMediumLocationList() {
 		return IntStream.range(0, MEDIUM_LIST_SIZE)
 				.mapToObj(this::getLocation)
@@ -74,6 +81,39 @@ public class DataGenerator {
 				.company3Id(company3Id % 3 == 0 ? null : company3Id)
 				.company4Id(company4Id)
 				.company5Id(company5Id % 3 == 0 ? null : company5Id)
+				.name(name)
+				.address(faker.address().streetAddress())
+				.location(location)
+				.city(faker.address().city())
+				.state(stateAbbr)
+				.zipcode(faker.address().zipCode())
+				.latitude(new BigDecimal(faker.address().latitude()))
+				.longitude(new BigDecimal(faker.address().longitude()))
+				.fuelPrice(faker.number().randomDouble(3, 2, 4))
+				.fuelPriceDate(asLocalDateTime(
+						faker.date().between(
+								asDate(now.minusDays(3)), asDate(now))
+						)
+				)
+				.locationType(LOCATION_TYPE)
+				.build();
+	}
+
+	private LocationWithStringIds getLocationWithStringIds(int i) {
+		String location = RandomStringUtils.randomAscii(15, 30);
+		String name = i % 7 == 0 ? faker.funnyName().name() + "'s #" + i : faker.funnyName().name() + "#" + i;
+		String stateAbbr = faker.address().stateAbbr();
+
+		int company3Id = faker.number().numberBetween(10, 15_000);
+		int company5Id = faker.number().numberBetween(400_000, 10_000_000);
+		String company4Id = i % 10 == 0 ? null : stateAbbr + i;
+
+		return LocationWithStringIds.builder()
+				.company1Id(String.valueOf(faker.number().numberBetween(10, 15_000)))
+				.company2Id(String.valueOf(faker.number().numberBetween(10, 15_000)))
+				.company3Id(String.valueOf(company3Id % 3 == 0 ? null : company3Id))
+				.company4Id(company4Id)
+				.company5Id(String.valueOf(company5Id % 3 == 0 ? null : company5Id))
 				.name(name)
 				.address(faker.address().streetAddress())
 				.location(location)

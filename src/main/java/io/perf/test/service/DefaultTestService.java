@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.perf.test.dao.OracleDao;
 import io.perf.test.model.Location;
+import io.perf.test.model.LocationWithStringIds;
 import io.perf.test.util.OraBatchExecutor;
 
 import org.springframework.stereotype.Service;
@@ -46,6 +47,14 @@ public class DefaultTestService implements TestService {
 		OraBatchExecutor.batch(OracleDao.class, batchDao -> {
 			batchDao.deleteLocations();
 			locations.forEach(batchDao::insertLocationWithoutJdbcTypeSpecs);
+		});
+	}
+
+	@Override
+	public void importWithMyBatisBatchWithStringIds(List<LocationWithStringIds> locations) {
+		OraBatchExecutor.batch(OracleDao.class, batchDao -> {
+			batchDao.deleteLocationsWithStringIds();
+			locations.forEach(batchDao::insertLocationWithVarcharIds);
 		});
 	}
 

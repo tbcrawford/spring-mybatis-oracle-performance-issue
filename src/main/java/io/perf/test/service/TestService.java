@@ -3,6 +3,7 @@ package io.perf.test.service;
 import java.util.List;
 
 import io.perf.test.model.Location;
+import io.perf.test.model.LocationWithStringIds;
 
 public interface TestService {
 
@@ -13,5 +14,7 @@ public interface TestService {
 	void importWithSpringTransactionWithoutJdbcSpecs(List<Location> locations);
 
 	void importWithMyBatisBatchWithoutJdbcSpecs(List<Location> locations);
+
+	void importWithMyBatisBatchWithStringIds(List<LocationWithStringIds> locations);
 
 }

@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 
 import io.perf.test.generator.DataGenerator;
 import io.perf.test.model.Location;
+import io.perf.test.model.LocationWithStringIds;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,12 @@ public class DefaultTimerService implements TimerService {
 	private final DataGenerator dataGenerator;
 
 	private static List<Location> largeList;
+	private static List<LocationWithStringIds> largeListWithStringIds;
 
 	@PostConstruct
 	public void init() {
 		largeList = dataGenerator.getLargeLocationList();
+		largeListWithStringIds = dataGenerator.getLargeLocationWithStringIdsList();
 	}
 
 	@Override
@@ -35,8 +38,7 @@ public class DefaultTimerService implements TimerService {
 		testSpringTransactionWithJdbcTypeSpecs();
 		testMyBatisBatchWithJdbcTypeSpecs();
 
-		testSpringTransactionWithoutJdbcTypeSpecs();
-		testMyBatisBatchWithoutJdbcTypeSpecs();
+		testMyBatisBatchWithStringIds();
 	}
 
 	/**
@@ -78,8 +80,8 @@ public class DefaultTimerService implements TimerService {
 	/**
 	 * Tests:
 	 * 1. 254.930s - 10,000 rows
-	 * 
-	 * Due to the amount of time this takes to perform these tests, more test numbers aren't recorded here. 
+	 *
+	 * Due to the amount of time this takes to perform these tests, more test numbers aren't recorded here.
 	 * More tests have been done in the past, and have shown the same approximate timings.
 	 * These timings are far greater than the above tests when the jdbcType is set in the xml.
 	 */
@@ -99,8 +101,8 @@ public class DefaultTimerService implements TimerService {
 	/**
 	 * Tests:
 	 * 1. 263.360s - 10,000 rows
-	 * 
-	 * Due to the amount of time this takes to perform these tests, more test numbers aren't recorded here. 
+	 *
+	 * Due to the amount of time this takes to perform these tests, more test numbers aren't recorded here.
 	 * More tests have been done in the past, and have shown the same approximate timings.
 	 * These timings are far greater than the above tests when the jdbcType is set in the xml.
 	 */
@@ -115,6 +117,25 @@ public class DefaultTimerService implements TimerService {
 
 		watch.stop();
 		log.info("MyBatis Batch elapsed time: {}s", toSeconds(watch.getTime()));
+	}
+
+	/**
+	 * Tests:
+	 * 1. 2.473s
+	 * 2. 2.502s
+	 * 3. 2.456s
+	 */
+	@Override
+	public void testMyBatisBatchWithStringIds() {
+		log.info("Starting MyBatis Batch test with STRING IDs");
+
+		StopWatch watch = new StopWatch();
+		watch.start();
+
+		defaultTestService.importWithMyBatisBatchWithStringIds(largeListWithStringIds);
+
+		watch.stop();
+		log.info("MyBatis Batch with STRING IDs elapsed time: {}s", toSeconds(watch.getTime()));
 	}
 
 }
